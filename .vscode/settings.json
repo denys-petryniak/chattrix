@@ -5,6 +5,8 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "eslint.enable": true,
+  // Required in vscode-eslint < v3.0.10 only
+  "eslint.useFlatConfig": true,
   "files.associations": {
     "*.css": "tailwindcss"
   },
