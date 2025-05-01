@@ -4,7 +4,7 @@ const { isStreaming = false } = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: "send-message", message: string): void;
+  "send-message": [message: string];
 }>();
 
 const textareaRef = useTemplateRef("textareaRef");
