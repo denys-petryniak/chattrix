@@ -17,5 +17,5 @@
   "tailwindCSS.experimental.classRegex": [
     ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-  "cSpell.words": ["Chattrix"]
+  "cSpell.words": ["Chattrix", "ollama"]
 }
