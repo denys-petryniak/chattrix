@@ -15,4 +15,20 @@ export default defineNuxtConfig({
   runtimeConfig: {
     openaiApiKey: "",
   },
+
+  mdc: {
+    highlight: {
+      theme: "vitesse-black",
+      langs: [
+        "html",
+        "css",
+        "javascript",
+        "typescript",
+        "vue",
+        "json",
+        "bash",
+        "markdown",
+      ],
+    },
+  },
 });
