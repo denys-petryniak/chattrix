@@ -10,7 +10,7 @@ export default defineNuxtConfig({
 
   css: ["~/assets/css/main.css"],
 
-  modules: ["@nuxt/eslint", "@nuxt/ui"],
+  modules: ["@nuxt/eslint", "@nuxt/ui", "@nuxtjs/mdc"],
 
   runtimeConfig: {
     openaiApiKey: "",
