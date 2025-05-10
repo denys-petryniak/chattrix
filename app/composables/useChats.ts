@@ -9,7 +9,7 @@ export default function useChats() {
 
     const chat = {
       id,
-      title: "New Chat",
+      title: `Chat ${id}`,
       messages: [],
       projectId: options.projectId,
       createdAt: new Date(),
@@ -24,7 +24,7 @@ export default function useChats() {
   async function createChatAndNavigate(options: { projectId?: string } = {}) {
     const chat = createChat(options);
 
-    await navigateTo(`chats/${chat.id}`);
+    await navigateTo(`/chats/${chat.id}`);
   }
 
   function getChatsByProjectId(projectId: string) {
