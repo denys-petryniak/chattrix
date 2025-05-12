@@ -48,51 +48,14 @@ async function handleCreateChat() {
     class="fixed top-16 left-0 bottom-0 w-64 transition-transform duration-300 z-40 bg-(--ui-bg-muted) border-r-(--ui-border) border-r"
     :class="{ '-translate-x-full': !isOpen }"
   >
-    <div v-if="getChatsWithoutProject.length > 0" class="overflow-y-auto p-4">
-      <div v-if="todayChats.length > 0" class="mb-4">
-        <div class="flex justify-between items-center mb-2">
-          <h2 class="text-sm font-semibold text-(--ui-text-muted)">Today</h2>
-        </div>
-        <UNavigationMenu
-          orientation="vertical"
-          :items="todayChats"
-          class="w-full mb-4"
-        />
-      </div>
-      <div v-if="lastWeekChats.length > 0" class="mb-4">
-        <div class="flex justify-between items-center mb-2">
-          <h2 class="text-sm font-semibold text-(--ui-text-muted)">
-            Last 7 Days
-          </h2>
-        </div>
-        <UNavigationMenu
-          orientation="vertical"
-          :items="lastWeekChats"
-          class="w-full mb-4"
-        />
-      </div>
-      <div v-if="lastMonthChats.length > 0" class="mb-4">
-        <div class="flex justify-between items-center mb-2">
-          <h2 class="text-sm font-semibold text-(--ui-text-muted)">
-            Last 30 Days
-          </h2>
-        </div>
-        <UNavigationMenu
-          orientation="vertical"
-          :items="lastMonthChats"
-          class="w-full mb-4"
-        />
-      </div>
-      <div v-if="olderChats.length > 0" class="mb-4">
-        <div class="flex justify-between items-center mb-2">
-          <h2 class="text-sm font-semibold text-(--ui-text-muted)">Older</h2>
-        </div>
-        <UNavigationMenu
-          orientation="vertical"
-          :items="olderChats"
-          class="w-full mb-4"
-        />
-      </div>
+    <div
+      v-if="getChatsWithoutProject.length > 0"
+      class="overflow-y-auto p-4 space-y-4"
+    >
+      <ChatSection title="Today" :items="todayChats" />
+      <ChatSection title="Last 7 Days" :items="lastWeekChats" />
+      <ChatSection title="Last 30 Days" :items="lastMonthChats" />
+      <ChatSection title="Older" :items="olderChats" />
     </div>
     <div v-else class="overflow-y-auto p-4">
       <UAlert
