@@ -114,6 +114,7 @@ async function handleNewChat() {
 .container {
   padding: 1rem;
   height: calc(100% - 4rem); /* Account for AppHeader */
+  margin-inline: auto;
 }
 
 .header {
