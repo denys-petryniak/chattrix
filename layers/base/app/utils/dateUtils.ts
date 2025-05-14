@@ -1,4 +1,4 @@
-import type { Chat } from "~/types";
+import type { Chat } from "~~/layers/chat/app/types";
 
 export function isWithinDays(date: Date, days: number): boolean {
   const millisecondsInDay = 86_400_000; // 24 * 60 * 60 * 1000
