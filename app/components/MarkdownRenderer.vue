@@ -53,7 +53,7 @@ defineProps<{
 
 .markdown-content pre {
   font-size: 0.875rem;
-  background-color: var(--ui-bg-inverted);
+  background-color: var(--ui-bg-muted);
   color: var(--color-white);
   padding: 1rem;
   border-radius: var(--ui-radius);
