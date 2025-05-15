@@ -1,5 +1,5 @@
 import { MOCK_PROJECT } from "./mockData";
-import type { Project } from "~~/layers/chat/app/types";
+import type { Project } from "#layers/chat/app/types";
 
 export default function useProjects() {
   const projects = useState<Project[]>("projects", () => [MOCK_PROJECT]);
