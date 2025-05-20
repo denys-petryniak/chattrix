@@ -24,4 +24,5 @@ export interface Project {
 
 export interface ChatWithProject {
   project: Project | null;
+  messages: ChatMessage[];
 }
