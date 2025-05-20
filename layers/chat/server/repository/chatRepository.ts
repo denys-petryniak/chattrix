@@ -94,10 +94,10 @@ export async function updateChat(
 }
 
 export async function deleteChat(id: string): Promise<boolean> {
-  const index = chats.findIndex((chat) => chat.id === id);
+  const chatIndex = chats.findIndex((chat) => chat.id === id);
 
-  if (index !== -1) {
-    chats.splice(index, 1);
+  if (chatIndex !== -1) {
+    chats.splice(chatIndex, 1);
     deleteMessagesForChat(id);
 
     return true;
@@ -154,7 +154,9 @@ export function getLastMessageForChat(chatId: string): ChatMessage | null {
 
   if (!chat || chat.messages.length === 0) return null;
 
-  return chat.messages.reduce((latest, msg) =>
-    msg.createdAt > latest.createdAt ? msg : latest
+  return chat.messages.reduce((latestMessage, currentMessage) =>
+    currentMessage.createdAt > latestMessage.createdAt
+      ? currentMessage
+      : latestMessage
   );
 }
