@@ -1,4 +1,4 @@
-import { getAllChats } from "../../repository/chatRepository";
+import { getAllChats } from "#layers/chat/server/repository/chatRepository";
 
 export default defineEventHandler(async (_event) => {
   return await getAllChats();
