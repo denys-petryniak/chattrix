@@ -1,9 +1,9 @@
 export default function useChats() {
   const {
     data: chats,
-    execute,
     status,
-  } = useAsyncData<Chat[]>("chats", () => $fetch<Chat[]>("/api/chats"), {
+    execute,
+  } = useFetch<Chat[]>("/api/chats", {
     immediate: false,
     default: () => [],
   });
