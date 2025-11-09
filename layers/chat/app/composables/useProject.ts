@@ -5,22 +5,20 @@ export default function useProject(projectId: string) {
     projects.value.find((project) => project.id === projectId)
   );
 
-  function updateProject(updatedProject: Partial<Project>) {
-    const currentProject = project.value;
+  async function updateProject(updatedProject: Partial<Project>) {
+    if (!project.value) return;
 
-    if (!currentProject) return;
+    const response = await $fetch<Project>(`/api/projects/${projectId}`, {
+      method: "PUT",
+      body: {
+        ...updatedProject,
+      },
+    });
 
-    const targetProjectIndex = projects.value.findIndex(
-      (project) => project.id === projectId
+    // Merge with existing to update in our data store
+    projects.value = projects.value.map((project) =>
+      project.id === projectId ? { ...project, ...response } : project
     );
-
-    if (targetProjectIndex === -1) return;
-
-    projects.value[targetProjectIndex] = {
-      ...currentProject,
-      ...updatedProject,
-      id: projectId, // ensures ID is preserved
-    };
   }
 
   return {
