@@ -16,21 +16,20 @@ export default function useChats() {
     }
   }
 
-  function createChat(options: { projectId?: string } = {}) {
-    const id = (chats.value.length + 1).toString();
+  async function createChat(
+    options: { projectId?: string; title?: string } = {}
+  ) {
+    const newChat = await $fetch<Chat>("/api/chats", {
+      method: "POST",
+      body: {
+        projectId: options.projectId,
+        title: options.title,
+      },
+    });
 
-    const chat = {
-      id,
-      title: `Chat ${id}`,
-      messages: [],
-      projectId: options.projectId,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    chats.value.push(newChat);
 
-    chats.value.push(chat);
-
-    return chat;
+    return newChat;
   }
 
   async function createChatAndNavigate(options: { projectId?: string } = {}) {
