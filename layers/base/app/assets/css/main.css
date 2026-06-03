@@ -37,6 +37,5 @@
   --ui-border-accented: var(--color-gray-700);
   --ui-border-inverted: var(--color-white);
 
-  --ui-radius: var(--radius-sm);
   --ui-container: var(--container-6xl);
 }
