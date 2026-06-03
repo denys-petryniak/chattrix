@@ -14,7 +14,7 @@ export const createOpenAIModel = (apiKey: string) => {
     apiKey,
   });
 
-  return openai("gpt-4o-mini");
+  return openai("gpt-4.1-nano");
 };
 
 export async function generateChatResponse(
