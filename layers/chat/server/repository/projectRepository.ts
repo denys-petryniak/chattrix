@@ -1,15 +1,36 @@
 import { v4 as uuidv4 } from "uuid";
 
-const projects: Project[] = [MOCK_PROJECT];
+const storage = useStorage<Project[]>("db");
+const projectsKey = "projects:all";
 
-export function getAllProjects(): Project[] {
+async function getProjects(): Promise<Project[]> {
+  let projects = await storage.getItem(projectsKey);
+
+  // Initialize with mock data
+  if (projects === null) {
+    projects = [MOCK_PROJECT];
+    await saveProjects(projects);
+  }
+
+  return projects;
+}
+
+async function saveProjects(projects: Project[]): Promise<void> {
+  await storage.setItem(projectsKey, projects);
+}
+
+export async function getAllProjects(): Promise<Project[]> {
+  const projects = await getProjects();
+
   return [...projects].sort(
-    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
   );
 }
 
-export function getProjectById(id: string): Project | null {
-  return projects.find((project) => project.id === id) || null;
+export async function getProjectById(id: string): Promise<Project | null> {
+  const projects = await getProjects();
+
+  return projects.find((p) => p.id === id) || null;
 }
 
 export async function createProject(data: { name: string }): Promise<Project> {
@@ -21,16 +42,19 @@ export async function createProject(data: { name: string }): Promise<Project> {
     updatedAt: now,
   };
 
+  const projects = await getProjects();
   projects.push(newProject);
+  await saveProjects(projects);
 
   return newProject;
 }
 
 export async function updateProject(
   id: string,
-  data: { name: string }
+  data: { name: string },
 ): Promise<Project | null> {
-  const projectIndex = projects.findIndex((project) => project.id === id);
+  const projects = await getProjects();
+  const projectIndex = projects.findIndex((p) => p.id === id);
 
   if (projectIndex === -1) return null;
 
@@ -46,16 +70,18 @@ export async function updateProject(
   };
 
   projects[projectIndex] = updatedProject;
+  await saveProjects(projects);
 
   return updatedProject;
 }
 
 export async function deleteProject(id: string): Promise<boolean> {
+  const projects = await getProjects();
   const index = projects.findIndex((project) => project.id === id);
 
   if (index !== -1) {
     projects.splice(index, 1);
-
+    await saveProjects(projects);
     return true;
   }
 

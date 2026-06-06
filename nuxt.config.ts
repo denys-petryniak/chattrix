@@ -9,4 +9,26 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: ["@nuxt/eslint"],
+
+  $development: {
+    nitro: {
+      storage: {
+        db: {
+          driver: "fs",
+          base: "./.data",
+        },
+      },
+    },
+  },
+
+  $production: {
+    nitro: {
+      storage: {
+        db: {
+          driver: "netlify-blobs",
+          name: "db",
+        },
+      },
+    },
+  },
 });

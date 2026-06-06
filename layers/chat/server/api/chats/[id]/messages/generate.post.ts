@@ -10,7 +10,7 @@ import {
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
 
-  const history = getMessagesByChatId(id);
+  const history = await getMessagesByChatId(id);
 
   const openaiApiKey = useRuntimeConfig().openaiApiKey;
   const openaiModel = createOpenAIModel(openaiApiKey);
