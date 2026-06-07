@@ -1,16 +1,18 @@
 import { createProject } from "#layers/chat/server/repository/projectRepository";
+import { CreateProjectSchema } from "#layers/chat/server/schemas";
 
 export default defineEventHandler(async (event) => {
-  const { name } = await readBody(event);
+  const { success, data } = await readValidatedBody(
+    event,
+    CreateProjectSchema.safeParse,
+  );
 
-  if (!name) {
+  if (!success) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Project name is required",
+      statusMessage: "Invalid request body",
     });
   }
 
-  const project = await createProject({ name });
-
-  return project;
+  return createProject(data);
 });

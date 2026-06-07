@@ -1,13 +1,23 @@
 import {
   createOpenAIModel,
   generateChatResponse,
-} from "../services/ai-service";
+} from "#layers/chat/server/services/ai-service";
+import { ChatMessageSchema } from "#layers/chat/server/schemas";
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
-  const { messages } = body;
+  const { success, data } = await readValidatedBody(
+    event,
+    ChatMessageSchema.safeParse,
+  );
 
-  const id = messages.length.toString();
+  if (!success) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid request body",
+    });
+  }
+
+  const { messages } = data;
 
   const openaiApiKey = useRuntimeConfig().openaiApiKey;
   const openaiModel = createOpenAIModel(openaiApiKey);
@@ -18,7 +28,7 @@ export default defineEventHandler(async (event) => {
   const response = await generateChatResponse(openaiModel, messages);
 
   return {
-    id,
+    id: messages.length.toString(),
     role: "assistant",
     content: response,
   };

@@ -2,9 +2,22 @@ import {
   updateProject,
   getProjectById,
 } from "#layers/chat/server/repository/projectRepository";
+import { UpdateProjectSchema } from "#layers/chat/server/schemas";
 
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
+
+  const { success, data } = await readValidatedBody(
+    event,
+    UpdateProjectSchema.safeParse,
+  );
+
+  if (!success) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid request body",
+    });
+  }
 
   const project = await getProjectById(id);
 
@@ -15,14 +28,5 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { name } = await readBody(event);
-
-  if (!name) {
-    throw createError({
-      statusCode: 400,
-      statusMessage: "Project name is required",
-    });
-  }
-
-  return updateProject(id, { name });
+  return updateProject(id, data);
 });

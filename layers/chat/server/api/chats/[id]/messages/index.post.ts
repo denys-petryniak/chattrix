@@ -1,12 +1,24 @@
 import { createMessageForChat } from "#layers/chat/server/repository/chatRepository";
+import { CreateMessageSchema } from "#layers/chat/server/schemas";
 
 export default defineEventHandler(async (event) => {
   const { id } = getRouterParams(event);
-  const { content, role } = await readBody(event);
+
+  const { success, data } = await readValidatedBody(
+    event,
+    CreateMessageSchema.safeParse,
+  );
+
+  if (!success) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid request body",
+    });
+  }
 
   return await createMessageForChat({
     chatId: id,
-    content,
-    role,
+    content: data.content,
+    role: data.role,
   });
 });
