@@ -13,6 +13,12 @@ import { z } from "zod";
  * They are complementary: TS guards the code in the editor; Zod guards the
  * data on the wire. (Bonus: `z.infer<typeof Schema>` derives the TS type from
  * the schema, so there's a single source of truth.)
+ *
+ * Bonus pattern — SHARED schemas: the same schema can validate on the client
+ * (forms, instant UX) and the server (the real gate — the client can always
+ * be bypassed). One definition, one source of truth. Because the schema then
+ * ships to the browser, bundle size matters — which is why front-heavy apps
+ * often reach for Valibot or zod/mini (tree-shakable) over full Zod.
  */
 
 // Message role enum and type definition
